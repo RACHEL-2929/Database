@@ -4,7 +4,7 @@
 
 SELECT ASCII('A');
 
--- CONCAT 문자열을 이어붙이는 함수ALTER
+-- CONCAT 문자열을 이어붙이는 함수
 
 
 SELECT CONCAT('호랑이', '돼지');
@@ -102,14 +102,67 @@ SELECT RAND(), FLOOR(RAND() * (11 - 1) + 1);
 
 
 -- SIGN(숫자)	-- 양수면 1, 0이면 0, 음수면 -1 반환
-SELECT sign(10.1), sign(0), sign(-10.1);
+SELECT SIGN(10.1), SIGN(0), SIGN(- 10.1);
 
 
 -- TRUNCATE(숫자, 정수)
 -- 소수점을 나타내고 싶은 자리까지 나타내기
 -- 소수점을 기준으로 정수 위치까지 구하고 나머지는 버린다.
-SELECT TRUNCATE(12345.12345,2), TRUNCATE(12345.12345,-2);
+SELECT TRUNCATE(12345.12345, 2), TRUNCATE(12345.12345, - 2);
 
 
+-- ADDDATE(날짜,차이), SUBDATE(날짜,차이)
+SELECT ADDDATE('2023-05-31', INTERVAL 30 DAY);
+-- 해당 날짜만큼 이후
+SELECT SUBDATE('2023-05-31', INTERVAL 30 DAY);
+-- 해당 날짜만큼 전
+
+-- ADDTIME(날짜/시간, 시간), SUBTIME(날짜/시간, 시간)
+SELECT ADDTIME('2023-05-31 09:00:00', '1:0:1');
+-- 해당 시간만큼 더해짐
+SELECT SUBTIME('2023-05-31 09:00:00', '1:0:1');
+-- 해당 시간만큼 뺌
 
 
+-- CURDATE(), CURTIME(),NOW(), SYSDATE()->시스템 상 날짜와시간
+SELECT CURDATE(), CURRENT_TIME(), NOW(), SYSDATE();
+
+SELECT YEAR(CURDATE()), MONTH(CURDATE()), DAYOFMONTH(CURDATE());
+SELECT 
+    HOUR(CURTIME()),
+    MINUTE(CURTIME()),
+    SECOND(CURRENT_TIME()),
+    MICROSECOND(CURRENT_TIME());
+    
+SELECT DATE(NOW()), TIME(NOW());
+
+
+-- datediff(날짜1, 날짜2), timediff(날짜또는시간1, 날짜또는시간2);
+SELECT DATEDIFF('2024-05-30', NOW());
+SELECT TIMEDIFF('17:07:11', '13:06:10');
+-- 앞에 것에서 뒤에 것을 뺌
+
+SELECT DAYOFWEEK(CURDATE());	-- 일요일이 1
+SELECT MONTHNAME(CURDATE());	-- 해당 달의 영어이름
+SELECT DAYOFYEAR(CURDATE());	-- 1/1일부터 며칠이 흘렀는지
+
+
+-- last_day(날짜)
+SELECT LAST_DAY('20230201');
+
+
+-- makedate(연도,정수)
+SELECT MAKEDATE(2024, 32);	-- 해당연도 첫날에서 정수만큼 지난 날짜
+
+
+-- period_add(연월,개월 수)
+select period_add(202305,6);	-- 해당 개월수만큼 더한 것
+
+
+-- quarter(날짜)
+SELECT quarter(curdate());		-- 분기 나타내기
+
+
+-- TIME_TO_SEC(시간)
+-- 입력한 시간을 초 단위로 구함
+select time_to_sec('1:1:1');		-- 해당 시간을 초단위로 나타내줌
